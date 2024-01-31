@@ -3,6 +3,8 @@ import { createEditor } from "slate"
 import { withHistory } from "slate-history"
 import { Editable, Slate, withReact } from "slate-react"
 
+import "./style.css"
+
 function getCurrentPageUrl(setUrl) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const url = tabs[0].url
@@ -24,8 +26,8 @@ export default function DeltaFlyerPage() {
 
   return (
     <div>
-      <h3>The Url: </h3>
-      <p>{currentUrl}</p>
+      <h3 className="tutor-font-bold">The Url: </h3>
+      <p className="">{currentUrl}</p>
       <h3>Target document link: </h3>
       <p>The link to {currentUrl}</p>
       <h3>Can update via following editor: </h3>
