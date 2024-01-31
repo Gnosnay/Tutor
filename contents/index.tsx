@@ -13,7 +13,7 @@ export const getStyle = () => {
 
 const App = () => {
   const [isDrawerShown, setIsDrawerShown] = useState<boolean>(false);
-  console.log("999")
+  console.log("11111")
 
   return (
     isDrawerShown
