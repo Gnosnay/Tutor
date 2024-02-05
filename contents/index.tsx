@@ -13,13 +13,11 @@ export const getStyle = () => {
 
 const App = () => {
   const [isDrawerShown, setIsDrawerShown] = useState<boolean>(false);
-  console.log("11111")
+  console.log("1111")
 
   return (
     isDrawerShown
-      ? <Drawer
-        className="tutor-z-100 tutor-fixed tutor-top-0 tutor-right-0 tutor-w-400 tutor-h-screen"
-        onClick={() => { setIsDrawerShown(false) }}
+      ? <Drawer onClick={() => { setIsDrawerShown(false) }}
       />
       : <Button
         className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0 tutor-w-12 tutor-h-10"
