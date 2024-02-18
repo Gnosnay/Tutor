@@ -1,33 +1,19 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# Tutor
 
-## Getting Started
+## Use Cases
 
-First, run the development server:
+### 1. Notices
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+When loading the page, it can display one or more [Alert](https://daisyui.com/components/alert/) for remindering users that there are any changes for the products.
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+### 2. Overview
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+When click the menu button, the drawer will be popped up, there will be following data:
+1. System info
+    - System name
+    - Domain name
+    - Guide maintainer email
+    - Last updated time
+    - Doc version
+2. Active Notices. Active Notices is one [collapse](https://daisyui.com/components/collapse/).
+    - Active Notices
