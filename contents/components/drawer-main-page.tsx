@@ -55,7 +55,7 @@ const getBasicInfo = async (): Promise<{ title: string, value: string, icon: Rea
   await new Promise(resolve => setTimeout(resolve, 5000));
   return [
     { "title": "Maintainer Email", "value": "test@google.com", "icon": <AtSymbolIcon className="tutor-w-6 tutor-h-6" /> },
-    { "title": "Domain Name", "value": "{window.location.host}", "icon": <GlobeAltIcon className="tutor-w-6 tutor-h-6" /> },
+    { "title": "Domain Name", "value": window.location.host, "icon": <GlobeAltIcon className="tutor-w-6 tutor-h-6" /> },
     { "title": "Last Updated At", "value": "2024-02-01 14:10:00 utc", "icon": <ClockIcon className="tutor-w-6 tutor-h-6" /> },
     { "title": "Current Version", "value": "v1.2.3", "icon": <DocumentIcon className="tutor-w-6 tutor-h-6" /> },
   ]

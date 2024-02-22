@@ -46,13 +46,13 @@ const AppContainer = () => {
           onClick={() => { setIsDrawerShown(true) }}
         />}
       {isPending ? <></> : data.filter(e => !hiddenNoticeIds.includes(e.id)).map(item =>
-        <div role="alert" className="tutor-alert tutor-alert-success tutor-m-5">
-          <InformationCircleIcon className="tutor-h-6 tutor-w-6 tutor-stroke-primary-content" />
+        <div role="alert" className="tutor-alert tutor-shadow-lg tutor-m-5">
+          <InformationCircleIcon className="tutor-h-6 tutor-w-6" />
           <div>
-            <h3 className="tutor-font-bold tutor-text-primary-content">{item.title}</h3>
-            <div className="tutor-text-xs tutor-text-primary-content">{item.noticeBrief}</div>
+            <h3 className="tutor-font-bold">{item.title}</h3>
+            <div className="tutor-text-xs">{item.noticeBrief}</div>
           </div>
-          <button className="tutor-btn tutor-btn-sm" onClick={() => {
+          <button className="tutor-btn tutor-btn-sm tutor-btn-primary" onClick={() => {
             setHiddenNoticeIds([...hiddenNoticeIds, item.id])
           }}>Close</button>
         </div>)}
