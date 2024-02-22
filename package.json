@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.7.2",
     "plasmo": "0.84.0",
