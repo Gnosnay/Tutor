@@ -8,7 +8,10 @@ import {
   QueryClient,
   QueryClientProvider,
   useQuery,
+  keepPreviousData,
 } from '@tanstack/react-query'
+import { type Document, getDocStatistics, getHistoricalNotices, getNotices, getUseCases } from "~contents/utils/docs-query"
+import { getProductInfo } from "~contents/utils/product-query"
 
 
 function BadgeBoard({ items }: { items: { title: string, amount: number }[] }) {
@@ -42,22 +45,14 @@ function HighlightItems({ items }: { items: { icon: ReactElement, title: string,
 
 type ActiveTab = 'notices' | 'usecases' | 'historical notices';
 
-const getBadges = async (): Promise<{ amount: number, title: string }[]> => {
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  return [
-    { 'amount': 4, 'title': 'Notices' },
-    { 'amount': 78, 'title': 'Use Cases' },
-    { 'amount': 13, 'title': 'Historical Notices' },
-  ]
-}
 
 const getBasicInfo = async (): Promise<{ title: string, value: string, icon: ReactElement }[]> => {
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  const info = await getProductInfo()
   return [
-    { "title": "Maintainer Email", "value": "test@google.com", "icon": <AtSymbolIcon className="tutor-w-6 tutor-h-6" /> },
+    { "title": "Maintainer Email", "value": info.maintainerEmail, "icon": <AtSymbolIcon className="tutor-w-6 tutor-h-6" /> },
     { "title": "Domain Name", "value": window.location.host, "icon": <GlobeAltIcon className="tutor-w-6 tutor-h-6" /> },
-    { "title": "Last Updated At", "value": "2024-02-01 14:10:00 utc", "icon": <ClockIcon className="tutor-w-6 tutor-h-6" /> },
-    { "title": "Current Version", "value": "v1.2.3", "icon": <DocumentIcon className="tutor-w-6 tutor-h-6" /> },
+    { "title": "Last Updated At", "value": info.lastUpdateAt, "icon": <ClockIcon className="tutor-w-6 tutor-h-6" /> },
+    { "title": "Current Version", "value": info.currentVersion, "icon": <DocumentIcon className="tutor-w-6 tutor-h-6" /> },
   ]
 }
 
@@ -73,20 +68,48 @@ const LoadingComponent = ({ repeat }: { repeat: number }) => {
   )
 }
 
+const DocBrief = ({ doc }: { doc: Document }) => {
+  return (
+    <div className="tutor-collapse tutor-bg-base-200 tutor-collapse-arrow tutor-mb-4">
+      <input type="checkbox" defaultChecked name={`${doc.id}`} />
+      <div className="tutor-collapse-title tutor-text-xl tutor-font-medium">
+        {doc.title}
+      </div>
+      <div className="tutor-collapse-content">
+        <p>{doc.brief}</p>
+      </div>
+    </div>
+  )
+}
+
 export default function DrawerMainPage({ onClose, router }: { onClose: () => void, router: Router }) {
   const [editor] = useState(() => withReact(withHistory(createEditor())))
   const [currentUrl, setCurrentUrl] = useState(window.location.host)
-  const [fadeInAnimation, setFadeInAnimation] = useState(true)
   const [activeTab, setActiveTab] = useState<ActiveTab>('usecases')
-  const { isPending: isPendingBadges, error: badgeErr, data: badges, isFetching: isFetchingBadegs } = useQuery({
+
+  const { isPending: isBadgesPending, error: badgeErr, data: badges, isFetching: isFetchingBadegs } = useQuery({
     queryKey: ['badgesData'],
-    queryFn: getBadges,
+    queryFn: getDocStatistics,
   })
-  const { isPending: isPendingInfo, error: infoErr, data: info, isFetching: isFetchingInfo } = useQuery({
+  const { isPending: isInfoPending, error: infoErr, data: info, isFetching: isFetchingInfo } = useQuery({
     queryKey: ['InfoData'],
     queryFn: getBasicInfo,
   })
-
+  const { isPending: isTabPending, isError: isTabError, error: tabErr, data: docs, isFetching: isTabFetching, isPlaceholderData } =
+    useQuery({
+      queryKey: ['projects', activeTab],
+      queryFn: async () => {
+        switch (activeTab) {
+          case 'historical notices':
+            return await getHistoricalNotices()
+          case 'notices':
+            return await getNotices()
+          case 'usecases':
+            return await getUseCases()
+        }
+      },
+      placeholderData: keepPreviousData,
+    })
 
   const initialValue = [
     {
@@ -111,14 +134,26 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
       <div className="tutor-px-4 tutor-py-2">
         <div className="tutor-card">
           <h2 className="tutor-text-xl tutor-my-4 tutor-font-medium">Infra Center</h2>
-          {isPendingBadges ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-4" /> : <BadgeBoard items={badges} />}
-          {isPendingInfo ? <LoadingComponent repeat={3} /> : <HighlightItems items={info} />}
+          {isBadgesPending ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-4" /> : <BadgeBoard items={badges} />}
+          {isInfoPending ? <LoadingComponent repeat={3} /> : <HighlightItems items={info} />}
         </div>
-        <div role="tablist" className="tutor-tabs tutor-tabs-boxed">
-          <a role="tab" className="tutor-tab">Notices</a>
-          <a role="tab" className="tutor-tab tutor-tab-active">Use Cases</a>
-          <a role="tab" className="tutor-tab">Historical Notices</a>
+        <div role="tablist" className="tutor-tabs tutor-tabs-boxed tutor-mb-4">
+          <a role="tab"
+            className={`tutor-tab ${activeTab == 'notices' ? 'tutor-tab-active' : ''}`}
+            onClick={() => setActiveTab('notices')}>Notices</a>
+          <a role="tab" className={`tutor-tab ${activeTab == 'usecases' ? 'tutor-tab-active' : ''}`}
+            onClick={() => setActiveTab('usecases')}>Use Cases</a>
+          <a role="tab" className={`tutor-tab ${activeTab == 'historical notices' ? 'tutor-tab-active' : ''}`}
+            onClick={() => setActiveTab('historical notices')}>Historical Notices</a>
         </div>
+        {isTabPending || isTabFetching ? (
+          <div className="tutor-skeleton tutor-w-full tutor-h-48" />
+        ) : isTabError ? (
+          <div>Error: {tabErr.message}</div>
+        ) : (
+          docs.map(doc => <DocBrief doc={doc} />)
+        )}
+
         {/* <h3>Target document link: </h3>
         <p>The link to {currentUrl}</p>
         <h3>Can update via following editor: </h3>

@@ -8,6 +8,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { getNotices } from "./utils/docs-query"
 
 const DRAWER_ID = "tutor-app-drawer"
 const queryClient = new QueryClient()
@@ -22,18 +23,7 @@ const AppContainer = () => {
   const [isDrawerShown, setIsDrawerShown] = useState<boolean>(false);
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ['repoData'],
-    queryFn: async (): Promise<{ id: number, title: string, noticeBrief: string }[]> => {
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      return [{
-        'id': 1,
-        'title': 'v1.2.1 Bugfixes release',
-        'noticeBrief': 'Please have one look on the bug fixes releases.',
-      }, {
-        'id': 2,
-        'title': 'v1.2.0 New Feature release',
-        'noticeBrief': 'Please have one look on the new features!',
-      }]
-    },
+    queryFn: getNotices,
   })
   const [hiddenNoticeIds, setHiddenNoticeIds] = useState<number[]>([]);
 
@@ -50,7 +40,7 @@ const AppContainer = () => {
           <InformationCircleIcon className="tutor-h-6 tutor-w-6" />
           <div>
             <h3 className="tutor-font-bold">{item.title}</h3>
-            <div className="tutor-text-xs">{item.noticeBrief}</div>
+            <div className="tutor-text-xs">{item.brief}</div>
           </div>
           <button className="tutor-btn tutor-btn-sm tutor-btn-primary" onClick={() => {
             setHiddenNoticeIds([...hiddenNoticeIds, item.id])
