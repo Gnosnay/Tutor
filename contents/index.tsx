@@ -9,8 +9,8 @@ import {
 } from '@tanstack/react-query'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { getNotices } from "./utils/docs-query"
+import uniqid from 'uniqid';
 
-const DRAWER_ID = "tutor-app-drawer"
 const queryClient = new QueryClient()
 
 export const getStyle = () => {
@@ -36,7 +36,7 @@ const AppContainer = () => {
           onClick={() => { setIsDrawerShown(true) }}
         />}
       {isPending ? <></> : data.filter(e => !hiddenNoticeIds.includes(e.id)).map(item =>
-        <div role="alert" className="tutor-alert tutor-shadow-lg tutor-m-5">
+        <div key={uniqid()} role="alert" className="tutor-alert tutor-shadow-lg tutor-m-5">
           <InformationCircleIcon className="tutor-h-6 tutor-w-6" />
           <div>
             <h3 className="tutor-font-bold">{item.title}</h3>

@@ -5,33 +5,37 @@ import { Editable, Slate, withReact } from "slate-react"
 import type { Router } from "~contents/utils/router"
 import { AtSymbolIcon, ClockIcon, DocumentIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 import {
-  QueryClient,
-  QueryClientProvider,
   useQuery,
   keepPreviousData,
 } from '@tanstack/react-query'
 import { type Document, getDocStatistics, getHistoricalNotices, getNotices, getUseCases } from "~contents/utils/docs-query"
 import { getProductInfo } from "~contents/utils/product-query"
+import React from "react"
+import uniqid from 'uniqid';
 
 
 function BadgeBoard({ items }: { items: { title: string, amount: number }[] }) {
   return <div className="tutor-flex tutor-w-full tutor-border tutor-border-[oklch(var(--p))] tutor-p-4 tutor-rounded-box tutor-overflow-x-auto">
-    {items.map(item => <div className="tutor-grid tutor-h-12 tutor-flex-grow tutor-place-items-center">
-      <h2 className="tutor-font-bold tutor-text-lg tutor-whitespace-nowrap">{item.amount}</h2>
-      <p className="tutor-text-sm tutor-whitespace-nowrap">{item.title}</p>
-    </div>).reduce((accumulator, currentValue, currentIndex) => {
-      if (currentIndex < items.length - 1) {
-        return [...accumulator, currentValue, <div className="tutor-divider tutor-divider-horizontal" />];
-      } else {
-        return [...accumulator, currentValue];
-      }
-    }, [])}
+    {
+      items.map(item =>
+        <div className="tutor-grid tutor-h-12 tutor-flex-grow tutor-place-items-center">
+          <h2 className="tutor-font-bold tutor-text-lg tutor-whitespace-nowrap">{item.amount}</h2>
+          <p className="tutor-text-sm tutor-whitespace-nowrap">{item.title}</p>
+        </div>
+      ).reduce((accumulator, currentValue, currentIndex) => {
+        if (currentIndex < items.length - 1) {
+          return [...accumulator, currentValue, <div className="tutor-divider tutor-divider-horizontal" />];
+        } else {
+          return [...accumulator, currentValue];
+        }
+      }, []).map((e, index) => React.cloneElement(e, { key: index }))
+    }
   </div>
 }
 
 function HighlightItems({ items }: { items: { icon: ReactElement, title: string, value: string }[] }) {
   return <div className="tutor-flex tutor-flex-col tutor-py-4 tutor-items-start tutor-justify-center">
-    {items.map(item => <div className="tutor-flex tutor-flex-row tutor-w-full">
+    {items.map(item => <div key={uniqid()} className="tutor-flex tutor-flex-row tutor-w-full">
       <div className="tutor-flex-none tutor-flex tutor-items-center tutor-justify-center tutor-p-4">
         {item.icon}
       </div>
@@ -58,7 +62,7 @@ const getBasicInfo = async (): Promise<{ title: string, value: string, icon: Rea
 
 const LoadingComponent = ({ repeat }: { repeat: number }) => {
   return (
-    new Array(repeat).fill(<div className="tutor-flex tutor-gap-4 tutor-items-center tutor-mb-4">
+    new Array(repeat).fill(0).map(_ => <div key={uniqid()} className="tutor-flex tutor-gap-4 tutor-items-center tutor-mb-4">
       <div className="tutor-skeleton tutor-w-16 tutor-h-16 tutor-rounded-full tutor-shrink-0"></div>
       <div className="tutor-flex tutor-flex-col tutor-gap-4">
         <div className="tutor-skeleton tutor-h-4 tutor-w-20"></div>
@@ -145,14 +149,15 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
             onClick={() => setActiveTab('usecases')}>Use Cases</a>
           <a role="tab" className={`tutor-tab ${activeTab == 'historical notices' ? 'tutor-tab-active' : ''}`}
             onClick={() => setActiveTab('historical notices')}>Historical Notices</a>
-        </div>
+        </div >
         {isTabPending || isTabFetching ? (
           <div className="tutor-skeleton tutor-w-full tutor-h-48" />
         ) : isTabError ? (
           <div>Error: {tabErr.message}</div>
         ) : (
-          docs.map(doc => <DocBrief doc={doc} />)
-        )}
+          docs.map(doc => <DocBrief key={uniqid()} doc={doc} />)
+        )
+        }
 
         {/* <h3>Target document link: </h3>
         <p>The link to {currentUrl}</p>
@@ -165,7 +170,7 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
             }}
           />
         </Slate> */}
-      </div>
+      </div >
     </div >
   )
 }

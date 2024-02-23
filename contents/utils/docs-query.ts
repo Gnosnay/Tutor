@@ -21,21 +21,21 @@ export const getHistoricalNotices = async (): Promise<Document[]> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return [
         {
-            'id': 3,
+            'id': 11,
             'title': 'v1.1.0 Bugfixes release',
             'brief': 'Please have one look on the bug fixes releases.',
             'doc': '',
             'files': [''],
         },
         {
-            'id': 4,
+            'id': 12,
             'title': 'v1.1.1 New Feature release',
             'brief': 'Please have one look on the new features!',
             'doc': '',
             'files': [''],
         },
         {
-            'id': 5,
+            'id': 13,
             'title': 'v1.0.0 Bugfixes release',
             'brief': 'Please have one look on the bug fixes releases.',
             'doc': '',
@@ -47,13 +47,13 @@ export const getHistoricalNotices = async (): Promise<Document[]> => {
 export const getNotices = async (): Promise<Document[]> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return [{
-        'id': 1,
+        'id': 14,
         'title': 'v1.2.1 Bugfixes release',
         'brief': 'Please have one look on the bug fixes releases.',
         'doc': '',
         'files': [''],
     }, {
-        'id': 2,
+        'id': 15,
         'title': 'v1.2.1 New Feature release',
         'brief': 'Please have one look on the new features!',
         'doc': '',
@@ -64,31 +64,31 @@ export const getNotices = async (): Promise<Document[]> => {
 export const getUseCases = async (): Promise<Document[]> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return [{
-        'id': 1,
+        'id': 16,
         'title': 'Guide one',
         'brief': 'Guide one  Guide one Guide one ',
         'doc': '',
         'files': [''],
     }, {
-        'id': 2,
+        'id': 17,
         'title': 'Guide two',
         'brief': 'Guide two Guide two Guide two ',
         'doc': '',
         'files': [''],
     }, {
-        'id': 3,
+        'id': 18,
         'title': 'Guide three',
         'brief': 'Guide two Guide two Guide two ',
         'doc': '',
         'files': [''],
     }, {
-        'id': 4,
+        'id': 19,
         'title': 'Guide four',
         'brief': 'Guide two Guide two Guide two ',
         'doc': '',
         'files': [''],
     }, {
-        'id': 5,
+        'id': 20,
         'title': 'Guide five',
         'brief': 'Guide two Guide two Guide two ',
         'doc': '',
