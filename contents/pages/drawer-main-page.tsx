@@ -134,8 +134,8 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
       <div className="tutor-px-4 tutor-py-2">
         <div className="tutor-card">
           <h2 className="tutor-text-xl tutor-my-4 tutor-font-medium">Infra Center</h2>
-          {isBadgesPending ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-4" /> : <BadgeBoard items={badges} />}
-          {isInfoPending ? <LoadingComponent repeat={3} /> : <HighlightItems items={info} />}
+          {isBadgesPending ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-2" /> : <BadgeBoard items={badges} />}
+          {isInfoPending ? <div className="tutor-mt-2"><LoadingComponent repeat={3} /></div> : <HighlightItems items={info} />}
         </div>
         <div role="tablist" className="tutor-tabs tutor-tabs-boxed tutor-mb-4">
           <a role="tab"
