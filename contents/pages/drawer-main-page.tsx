@@ -2,7 +2,6 @@ import { useState, type ReactElement } from "react"
 import { createEditor } from "slate"
 import { withHistory } from "slate-history"
 import { Editable, Slate, withReact } from "slate-react"
-import type { Router } from "~contents/utils/router"
 import { AtSymbolIcon, ClockIcon, DocumentIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 import {
   useQuery,
@@ -86,7 +85,7 @@ const DocBrief = ({ doc }: { doc: Document }) => {
   )
 }
 
-export default function DrawerMainPage({ onClose, router }: { onClose: () => void, router: Router }) {
+export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
   const [editor] = useState(() => withReact(withHistory(createEditor())))
   const [currentUrl, setCurrentUrl] = useState(window.location.host)
   const [activeTab, setActiveTab] = useState<ActiveTab>('usecases')
@@ -124,7 +123,7 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
 
   return (
     <div>
-      <div className="tutor-navbar tutor-px-4 tutor-bg-base-100 tutor-w-full">
+      <div className="tutor-navbar tutor-px-4 tutor-bg-base-100 tutor-w-full tutor-h-full">
         <div className="tutor-flex-1">
           <h2 className="tutor-card-title">Tutor Helper</h2>
         </div>
@@ -134,7 +133,7 @@ export default function DrawerMainPage({ onClose, router }: { onClose: () => voi
           </button>
         </div>
       </div>
-      <div className="tutor-w-full tutor-absolute tutor-border-b tutor-border-gray-300"></div>
+      <div className="tutor-w-full tutor-relative tutor-border-b tutor-border-gray-300"></div>
       <div className="tutor-px-4 tutor-py-2">
         <div className="tutor-card">
           <h2 className="tutor-text-xl tutor-my-4 tutor-font-medium">Infra Center</h2>
