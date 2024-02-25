@@ -3,6 +3,7 @@ import DrawerMainPage from "~contents/pages/drawer-main-page"
 import { DocumentMagnifyingGlassIcon, VideoCameraIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
 import uniqid from 'uniqid'
 import React from "react"
+import { RouterContainer } from "~contents/utils/router"
 
 
 const BottonNavBar = ({ items }: { items: { id?: string, icon: ReactElement, title: string, onActive: () => void }[] }) => {
@@ -61,7 +62,9 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
         tutor-flex tutor-flex-col tutor-h-screen
         tutor-bg-white tutor-shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] tutor-dark:bg-[#0e1726]`}>
         <div className="tutor-flex-1 tutor-overflow-y-auto">
-          <DrawerMainPage onClose={onClose} />
+          <RouterContainer>
+            <DrawerMainPage onClose={onClose} />
+          </RouterContainer>
         </div>
         <BottonNavBar items={navBarTabs} />
       </div>

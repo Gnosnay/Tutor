@@ -11,6 +11,8 @@ import { type Document, getDocStatistics, getHistoricalNotices, getNotices, getU
 import { getProductInfo } from "~contents/utils/product-query"
 import React from "react"
 import uniqid from 'uniqid';
+import { useRouterDispatch } from "~contents/utils/router"
+import { useRouter } from "~contents/utils/router"
 
 
 function BadgeBoard({ items }: { items: { title: string, amount: number }[] }) {
@@ -72,6 +74,7 @@ const LoadingComponent = ({ repeat }: { repeat: number }) => {
 }
 
 const DocBrief = ({ doc }: { doc: Document }) => {
+  const router = useRouter();
   return (
     <div className="tutor-collapse tutor-bg-base-200 tutor-collapse-arrow tutor-mb-4">
       <input type="checkbox" defaultChecked name={`${doc.id}`} />
@@ -81,6 +84,10 @@ const DocBrief = ({ doc }: { doc: Document }) => {
       <div className="tutor-collapse-content">
         <p>{doc.brief}</p>
       </div>
+      <button className="tutor-btn tutor-btn-link" onClick={() => {
+        // TODO change page
+        router.nextPage(<h1>Test</h1>);
+      }}>Details</button>
     </div>
   )
 }
