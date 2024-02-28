@@ -89,5 +89,8 @@ module.exports = {
     themeRoot: "*", // enable the themes
     styled: true,
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require('@tailwindcss/typography'),
+  ],
 }

@@ -13,6 +13,7 @@ import React from "react"
 import uniqid from 'uniqid';
 import { useRouterDispatch } from "~contents/utils/router"
 import { useRouter } from "~contents/utils/router"
+import { DocumentPage } from "./document-detail-page"
 
 
 function BadgeBoard({ items }: { items: { title: string, amount: number }[] }) {
@@ -86,7 +87,7 @@ const DocBrief = ({ doc }: { doc: Document }) => {
       </div>
       <button className="tutor-btn tutor-btn-link" onClick={() => {
         // TODO change page
-        router.nextPage(<h1>Test</h1>);
+        router.nextPage(<DocumentPage markdown={doc.doc} />);
       }}>Details</button>
     </div>
   )
