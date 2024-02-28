@@ -2,7 +2,8 @@ import ReactMarkdown from '~node_modules/react-markdown/react-markdown.min.js'
 import remarkGfm from 'remark-gfm'
 
 export const DocumentPage = ({ markdown }: { markdown: string }) => {
-    // return 
+    // plugin related: https://github.com/remarkjs/react-markdown/issues/526#issuecomment-751791923
+    // ReactMarkdown related: https://github.com/PlasmoHQ/plasmo/issues/774#issuecomment-1849253854
     return <article className="tutor-prose tutor-px-4">
         <ReactMarkdown remarkPlugins={[remarkGfm]} >{`
 v1.2.1 Bugfixes release
