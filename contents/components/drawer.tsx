@@ -24,9 +24,25 @@ const BottonNavBar = ({ items }: { items: { id?: string, icon: ReactElement, tit
   </div>
 }
 
+type tabType = 'docs' | 'recording' | 'settings';
+
+const DocTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
+  return <RouterContainer>
+    <DrawerMainPage onClose={onCloseClick} />
+  </RouterContainer>
+}
+
+const RecordingTab = ({ }) => {
+  return <h1>Hello</h1>
+}
+
+const Settings = ({ }) => {
+  return <h1>Comming soon</h1>
+}
 
 export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
   const [fadeInAnimation, setFadeInAnimation] = useState(true)
+  const [activeTab, setActiveTab] = useState<tabType>('docs')
   const onClose = () => {
     // fade out animation
     setFadeInAnimation(false);
@@ -37,19 +53,25 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
     {
       'icon': <DocumentMagnifyingGlassIcon />,
       'title': 'Docs',
-      'onActive': () => { },
+      'onActive': () => { setActiveTab('docs') },
     },
     {
       'icon': <VideoCameraIcon />,
       'title': 'Recording',
-      'onActive': () => { },
+      'onActive': () => { setActiveTab('recording') },
     },
     {
       'icon': <Cog6ToothIcon />,
       'title': 'Settings',
-      'onActive': () => { },
+      'onActive': () => { setActiveTab('settings') },
     },
   ]
+
+  const tabMapping: { [key in tabType]: ReactElement } = {
+    'docs': <DocTab onCloseClick={onClose} />,
+    'recording': <RecordingTab />,
+    'settings': <Settings />
+  }
 
   return (
     <div className="tutor-w-full">
@@ -62,9 +84,7 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
         tutor-flex tutor-flex-col tutor-h-screen
         tutor-bg-white tutor-shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] tutor-dark:bg-[#0e1726]`}>
         <div className="tutor-flex-1 tutor-overflow-y-auto">
-          <RouterContainer>
-            <DrawerMainPage onClose={onClose} />
-          </RouterContainer>
+          {tabMapping[activeTab]}
         </div>
         <BottonNavBar items={navBarTabs} />
       </div>
