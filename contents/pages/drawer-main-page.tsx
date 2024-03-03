@@ -2,7 +2,7 @@ import { useState, type ReactElement } from "react"
 import { createEditor } from "slate"
 import { withHistory } from "slate-history"
 import { Editable, Slate, withReact } from "slate-react"
-import { AtSymbolIcon, ClockIcon, DocumentIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
+import { AtSymbolIcon, ClockIcon, DocumentIcon, GlobeAltIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import {
   useQuery,
   keepPreviousData,
@@ -14,6 +14,7 @@ import uniqid from 'uniqid';
 import { useRouterDispatch } from "~contents/utils/router"
 import { useRouter } from "~contents/utils/router"
 import { DocumentPage } from "./document-detail-page"
+import { RawPage } from "./page-template"
 
 
 function BadgeBoard({ items }: { items: { title: string, amount: number }[] }) {
@@ -86,8 +87,7 @@ const DocBrief = ({ doc }: { doc: Document }) => {
         <p>{doc.brief}</p>
       </div>
       <button className="tutor-btn tutor-btn-link" onClick={() => {
-        // TODO change page
-        router.nextPage(<DocumentPage markdown={doc.doc} />);
+        router.nextPage(<DocumentPage title={doc.title} markdown={doc.doc} />);
       }}>Details</button>
     </div>
   )
@@ -130,54 +130,43 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
   ]
 
   return (
-    <div>
-      <div className="tutor-navbar tutor-px-4 tutor-bg-base-100 tutor-w-full tutor-h-full">
-        <div className="tutor-flex-1">
-          <h2 className="tutor-card-title">Tutor Helper</h2>
-        </div>
-        <div className="tutor-flex-none">
-          <button className="tutor-btn tutor-btn-circle tutor-btn-sm" onClick={onClose}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="tutor-h-4 tutor-w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
-        </div>
+    <RawPage title={"Tutor Helper"} rightIconBtn={
+      { icon: <XMarkIcon className="tutor-h-4 tutor-w-4" />, onClick: onClose, }
+    }>
+      <div className="tutor-card">
+        <h2 className="tutor-text-xl tutor-my-4 tutor-font-medium">Infra Center</h2>
+        {isBadgesPending ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-2" /> : <BadgeBoard items={badges} />}
+        {isInfoPending ? <div className="tutor-mt-2"><LoadingComponent repeat={3} /></div> : <HighlightItems items={info} />}
       </div>
-      <div className="tutor-w-full tutor-relative tutor-border-b tutor-border-gray-300"></div>
-      <div className="tutor-px-4 tutor-py-2">
-        <div className="tutor-card">
-          <h2 className="tutor-text-xl tutor-my-4 tutor-font-medium">Infra Center</h2>
-          {isBadgesPending ? <div className="tutor-skeleton tutor-w-full tutor-h-24 tutor-mb-2" /> : <BadgeBoard items={badges} />}
-          {isInfoPending ? <div className="tutor-mt-2"><LoadingComponent repeat={3} /></div> : <HighlightItems items={info} />}
-        </div>
-        <div role="tablist" className="tutor-tabs tutor-tabs-boxed tutor-mb-4">
-          <a role="tab"
-            className={`tutor-tab ${activeTab == 'notices' ? 'tutor-tab-active' : ''}`}
-            onClick={() => setActiveTab('notices')}>Notices</a>
-          <a role="tab" className={`tutor-tab ${activeTab == 'usecases' ? 'tutor-tab-active' : ''}`}
-            onClick={() => setActiveTab('usecases')}>Use Cases</a>
-          <a role="tab" className={`tutor-tab ${activeTab == 'historical notices' ? 'tutor-tab-active' : ''}`}
-            onClick={() => setActiveTab('historical notices')}>Historical Notices</a>
-        </div >
-        {isTabPending || isTabFetching ? (
-          <div className="tutor-skeleton tutor-w-full tutor-h-48" />
-        ) : isTabError ? (
-          <div>Error: {tabErr.message}</div>
-        ) : (
-          docs.map(doc => <DocBrief key={uniqid()} doc={doc} />)
-        )
-        }
-
-        {/* <h3>Target document link: </h3>
-        <p>The link to {currentUrl}</p>
-        <h3>Can update via following editor: </h3>
-        <Slate editor={editor} initialValue={initialValue}>
-          <Editable
-            style={{
-              border: "1px solid #333",
-              padding: 16
-            }}
-          />
-        </Slate> */}
+      <div role="tablist" className="tutor-tabs tutor-tabs-boxed tutor-mb-4">
+        <a role="tab"
+          className={`tutor-tab ${activeTab == 'notices' ? 'tutor-tab-active' : ''}`}
+          onClick={() => setActiveTab('notices')}>Notices</a>
+        <a role="tab" className={`tutor-tab ${activeTab == 'usecases' ? 'tutor-tab-active' : ''}`}
+          onClick={() => setActiveTab('usecases')}>Use Cases</a>
+        <a role="tab" className={`tutor-tab ${activeTab == 'historical notices' ? 'tutor-tab-active' : ''}`}
+          onClick={() => setActiveTab('historical notices')}>Historical Notices</a>
       </div >
-    </div >
+      {isTabPending || isTabFetching ? (
+        <div className="tutor-skeleton tutor-w-full tutor-h-48" />
+      ) : isTabError ? (
+        <div>Error: {tabErr.message}</div>
+      ) : (
+        docs.map(doc => <DocBrief key={uniqid()} doc={doc} />)
+      )
+      }
+
+      {/* <h3>Target document link: </h3>
+      <p>The link to {currentUrl}</p>
+      <h3>Can update via following editor: </h3>
+      <Slate editor={editor} initialValue={initialValue}>
+        <Editable
+          style={{
+            border: "1px solid #333",
+            padding: 16
+          }}
+        />
+      </Slate> */}
+    </RawPage >
   )
 }
