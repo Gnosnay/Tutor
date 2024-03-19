@@ -7,9 +7,10 @@ import {
   QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { InformationCircleIcon, MagnifyingGlassIcon, VideoCameraSlashIcon } from '@heroicons/react/24/outline'
 import { getNotices } from "./utils/docs-query"
 import uniqid from 'uniqid';
+import { RecorderContainer, useRecorder } from "./utils/recorder"
 
 const queryClient = new QueryClient()
 
@@ -26,15 +27,29 @@ const AppContainer = () => {
     queryFn: getNotices,
   })
   const [hiddenNoticeIds, setHiddenNoticeIds] = useState<number[]>([]);
+  const recorderCtx = useRecorder();
 
   return (
     <div>
       {isDrawerShown
         ? <Drawer onCloseEvent={() => { setIsDrawerShown(false) }} />
-        : <Button
-          className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0 tutor-w-12 tutor-h-10"
-          onClick={() => { setIsDrawerShown(true) }}
-        />}
+        : recorderCtx.states.state == 'idle' ?
+          <Button
+            className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0 tutor-w-12 tutor-h-10"
+            onClick={() => { setIsDrawerShown(true) }}
+            icon={<MagnifyingGlassIcon className="tutor-w-5 tutor-h-5" stroke="white" />}
+          />
+          : <Button
+            className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0 tutor-w-12 tutor-h-10"
+            onClick={() => {
+              recorderCtx.stopRecording((events) => {
+                // TODO
+                console.log(events);
+              })
+            }}
+            icon={<VideoCameraSlashIcon className="tutor-w-5 tutor-h-5" stroke="white" />}
+          />
+      }
       {isPending ? <></> : data.filter(e => !hiddenNoticeIds.includes(e.id)).map(item =>
         <div key={uniqid()} role="alert" className="tutor-alert tutor-shadow-lg tutor-m-5">
           <InformationCircleIcon className="tutor-h-6 tutor-w-6" />
@@ -53,7 +68,9 @@ const AppContainer = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppContainer />
+      <RecorderContainer>
+        <AppContainer />
+      </RecorderContainer>
     </QueryClientProvider>
   )
 }

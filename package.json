@@ -21,6 +21,7 @@
     "react-dom": "18.2.0",
     "react-markdown": "8.0.7",
     "remark-gfm": "3.0.1",
+    "rrweb": "^2.0.0-alpha.4",
     "slate": "0.100.0",
     "slate-history": "0.100.0",
     "slate-react": "0.100.1",

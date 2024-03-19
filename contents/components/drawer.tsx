@@ -4,6 +4,8 @@ import { DocumentMagnifyingGlassIcon, VideoCameraIcon, Cog6ToothIcon } from '@he
 import uniqid from 'uniqid'
 import React from "react"
 import { RouterContainer } from "~contents/utils/router"
+import { RawPage } from "~contents/pages/page-template"
+import { useRecorder } from "~contents/utils/recorder"
 
 
 const BottonNavBar = ({ items }: { items: { id?: string, icon: ReactElement, title: string, onActive: () => void }[] }) => {
@@ -32,8 +34,18 @@ const DocTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
   </RouterContainer>
 }
 
-const RecordingTab = ({ }) => {
-  return <h1>Hello</h1>
+const RecordingTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
+  const recorderCtx = useRecorder();
+
+  return <RawPage title="Recording" className="tutor-flex tutor-items-center tutor-justify-center tutor-h-screen">
+    <button className="tutor-btn" onClick={() => {
+      recorderCtx.startRecording();
+      onCloseClick();
+    }}>
+      <VideoCameraIcon className="tutor-w-6 tutor-h-5" />
+      Click for recording
+    </button>
+  </RawPage>
 }
 
 const Settings = ({ }) => {
@@ -69,7 +81,7 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
 
   const tabMapping: { [key in tabType]: ReactElement } = {
     'docs': <DocTab onCloseClick={onClose} />,
-    'recording': <RecordingTab />,
+    'recording': <RecordingTab onCloseClick={onClose} />,
     'settings': <Settings />
   }
 

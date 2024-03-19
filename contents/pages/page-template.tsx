@@ -7,7 +7,7 @@ export interface IconBtn {
 }
 
 
-export const RawPage = ({ title, leftIconBtn, rightIconBtn, children }: { title: string, leftIconBtn?: IconBtn, rightIconBtn?: IconBtn, children: ReactNode }) => {
+export const RawPage = ({ title, leftIconBtn, rightIconBtn, children, className }: { title: string, leftIconBtn?: IconBtn, rightIconBtn?: IconBtn, children: ReactNode, className?: string }) => {
 
     return (
         <div>
@@ -25,7 +25,7 @@ export const RawPage = ({ title, leftIconBtn, rightIconBtn, children }: { title:
                 </div>
             </div>
             <div className="tutor-w-full tutor-relative tutor-border-b tutor-border-gray-300"></div>
-            <div className="tutor-px-4 tutor-py-2">
+            <div className={`tutor-px-4 tutor-py-2 ${className}`}>
                 {children}
             </div >
         </div >
