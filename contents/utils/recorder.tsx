@@ -11,6 +11,7 @@ export type RecordingState = "idle" | "recording"
 export type RecordingStates = {
   state: RecordingState
   stopFn: (() => void) | null
+  prevEvents: (eventWithTime[]) | null
 }
 
 export interface RecorderContextType {
@@ -25,7 +26,7 @@ export const RecorderContext = createContext<RecorderContextType | null>(null)
 
 export function RecorderContainer({ children }) {
   const [states, setStates] = useState<RecordingStates>({
-    state: 'idle', stopFn: null
+    state: 'idle', stopFn: null, prevEvents: null
   });
 
   const startRecording = () => {
@@ -40,6 +41,7 @@ export function RecorderContainer({ children }) {
     setStates({
       state: 'recording',
       stopFn: stopFn,
+      prevEvents: null,
     })
   }
 
@@ -48,7 +50,7 @@ export function RecorderContainer({ children }) {
       throw Error(`Wrong recorder state: ${states.state}`)
     }
     states.stopFn();
-    setStates({ state: 'idle', stopFn: null });
+    setStates({ state: 'idle', stopFn: null, prevEvents: [...events] });
     onStop([...events]);
     events = [];
   }
