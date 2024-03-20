@@ -25,7 +25,7 @@ export const RawPage = ({
         <div className="tutor-flex-1">
           {leftIconBtn && (
             <button
-              className="tutor-btn tutor-btn-circle tutor-btn-sm tutor-mr-2"
+              className="tutor-btn tutor-btn-circle tutor-btn-sm tutor-mr-2 tutor-btn-outline tutor-btn-primary"
               onClick={leftIconBtn.onClick}>
               {leftIconBtn.icon}
             </button>
@@ -35,7 +35,7 @@ export const RawPage = ({
         <div className="tutor-flex-none">
           {rightIconBtn && (
             <button
-              className="tutor-btn tutor-btn-circle tutor-btn-sm"
+              className="tutor-btn tutor-btn-circle tutor-btn-sm tutor-btn-outline tutor-btn-primary"
               onClick={rightIconBtn.onClick}>
               {rightIconBtn.icon}
             </button>

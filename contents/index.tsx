@@ -56,21 +56,27 @@ const AppContainer = () => {
           }
         />
       ) : (
-        <Button
-          className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0 tutor-w-12 tutor-h-10"
-          onClick={() => {
-            recorderCtx.stopRecording((events) => {
-              // TODO
-              console.log(events)
-            })
-          }}
-          icon={
-            <VideoCameraSlashIcon
-              className="tutor-w-5 tutor-h-5"
-              stroke="white"
+        <div className="tutor-z-50 tutor-fixed tutor-top-32 tutor-right-0">
+          <div
+            className="tutor-tooltip tutor-tooltip-open tutor-tooltip-left"
+            data-tip="Click to stop recording">
+            <Button
+              className="tutor-w-12 tutor-h-10"
+              onClick={() => {
+                recorderCtx.stopRecording((events) => {
+                  // TODO
+                  console.log(events)
+                })
+              }}
+              icon={
+                <VideoCameraSlashIcon
+                  className="tutor-w-5 tutor-h-5"
+                  stroke="white"
+                />
+              }
             />
-          }
-        />
+          </div>
+        </div>
       )}
       {isPending ? (
         <></>
@@ -88,7 +94,7 @@ const AppContainer = () => {
                 <div className="tutor-text-xs">{item.brief}</div>
               </div>
               <button
-                className="tutor-btn tutor-btn-sm tutor-btn-primary"
+                className="tutor-btn tutor-btn-sm tutor-btn-outline tutor-btn-primary"
                 onClick={() => {
                   setHiddenNoticeIds([...hiddenNoticeIds, item.id])
                 }}>

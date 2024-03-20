@@ -1,8 +1,4 @@
-import {
-  PlayIcon,
-  VideoCameraIcon,
-  XMarkIcon
-} from "@heroicons/react/24/outline"
+import { VideoCameraIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import type { eventWithTime } from "@rrweb/types"
 import React, { useEffect, useRef, useState } from "react"
 
@@ -58,9 +54,13 @@ export const RecordingTab = ({
       <RawPage
         title="Recording"
         className="tutor-flex tutor-items-center tutor-justify-center 
-          tutor-flex-col tutor-space-y-4 tutor-h-screen">
+          tutor-flex-col tutor-space-y-4 tutor-h-screen"
+        rightIconBtn={{
+          icon: <XMarkIcon className="tutor-h-4 tutor-w-4" />,
+          onClick: onCloseClick
+        }}>
         <button
-          className="tutor-btn"
+          className="tutor-btn tutor-btn-outline tutor-btn-primary"
           onClick={() => {
             onCloseClick()
             setTimeout(() => recorderCtx.startRecording(), 300) // same with animation css
@@ -77,7 +77,8 @@ export const RecordingTab = ({
         {/* if we still let inline player play, there will be performance issue */}
         {prevEvents && inlinePlayerWidth && !showPlayer && (
           <div
-            className="tutor-bg-white tutor-p-6 tutor-rounded tutor-shadow-lg tutor-cursor-pointer"
+            className="tutor-bg-white tutor-p-6 tutor-rounded tutor-shadow-lg tutor-tooltip"
+            data-tip="Click to play"
             onClick={() => setShowPlayer(true)}>
             <Player
               events={prevEvents}
