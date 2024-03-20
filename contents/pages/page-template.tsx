@@ -20,8 +20,8 @@ export const RawPage = ({
   className?: string
 }) => {
   return (
-    <div>
-      <div className="tutor-navbar tutor-px-4 tutor-bg-base-100 tutor-w-full tutor-h-full">
+    <div className="tutor-h-full">
+      <div className="tutor-navbar tutor-px-4 tutor-bg-base-100 tutor-w-full">
         <div className="tutor-flex-1">
           {leftIconBtn && (
             <button
@@ -43,7 +43,9 @@ export const RawPage = ({
         </div>
       </div>
       <div className="tutor-w-full tutor-relative tutor-border-b tutor-border-gray-300"></div>
-      <div className={`tutor-px-4 tutor-py-2 ${className}`}>{children}</div>
+      <div className={`tutor-px-4 tutor-py-2 ${className || ""}`}>
+        {children}
+      </div>
     </div>
   )
 }

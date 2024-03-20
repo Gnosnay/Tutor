@@ -13,8 +13,9 @@ import { RouterContainer } from "~contents/utils/router"
 
 import Player from "./player"
 import { RecordingTab } from "./recording-tab"
+import { SettingsTab } from "./setting-tab"
 
-const BottonNavBar = ({
+const BottomNavBar = ({
   items
 }: {
   items: {
@@ -64,10 +65,6 @@ const DocTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
   )
 }
 
-const Settings = ({}) => {
-  return <h1>Comming soon</h1>
-}
-
 export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
   const [fadeInAnimation, setFadeInAnimation] = useState(true)
   const [activeTab, setActiveTab] = useState<tabType>("docs")
@@ -104,7 +101,7 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
   const tabMapping: { [key in tabType]: ReactElement } = {
     docs: <DocTab onCloseClick={onClose} />,
     recording: <RecordingTab onCloseClick={onClose} />,
-    settings: <Settings />
+    settings: <SettingsTab onCloseClick={onClose} />
   }
 
   return (
@@ -123,7 +120,7 @@ export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
         <div className="tutor-flex-1 tutor-overflow-y-auto">
           {tabMapping[activeTab]}
         </div>
-        <BottonNavBar items={navBarTabs} />
+        <BottomNavBar items={navBarTabs} />
       </div>
     </div>
   )

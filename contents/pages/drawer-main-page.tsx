@@ -1,5 +1,6 @@
 import {
   AtSymbolIcon,
+  ChatBubbleBottomCenterTextIcon,
   ClockIcon,
   DocumentIcon,
   GlobeAltIcon,
@@ -77,7 +78,7 @@ function HighlightItems({
   )
 }
 
-type ActiveTab = "notices" | "usecases" | "historical notices"
+type ActiveTab = "notices" | "usecases" | "historical notices" | "chat"
 
 const getBasicInfo = async (): Promise<
   { title: string; value: string; icon: ReactElement }[]
@@ -219,10 +220,12 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
           <HighlightItems items={info} />
         )}
       </div>
-      <div role="tablist" className="tutor-tabs tutor-tabs-boxed tutor-mb-4">
+      <div
+        role="tablist"
+        className="tutor-tabs tutor-tabs-boxed tutor-mb-4 tutor-overflow-x-auto">
         <a
           role="tab"
-          className={`tutor-tab ${
+          className={`tutor-tab tutor-whitespace-nowrap ${
             activeTab == "notices" ? "tutor-tab-active" : ""
           }`}
           onClick={() => setActiveTab("notices")}>
@@ -230,7 +233,7 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         </a>
         <a
           role="tab"
-          className={`tutor-tab ${
+          className={`tutor-tab tutor-whitespace-nowrap ${
             activeTab == "usecases" ? "tutor-tab-active" : ""
           }`}
           onClick={() => setActiveTab("usecases")}>
@@ -238,19 +241,35 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         </a>
         <a
           role="tab"
-          className={`tutor-tab ${
+          className={`tutor-tab tutor-whitespace-nowrap ${
             activeTab == "historical notices" ? "tutor-tab-active" : ""
           }`}
           onClick={() => setActiveTab("historical notices")}>
           Historical Notices
         </a>
+        <a
+          role="tab"
+          className={`tutor-tab tutor-whitespace-nowrap tutor-w-36 ${
+            activeTab == "chat" ? "tutor-tab-active" : ""
+          }`}
+          onClick={() => setActiveTab("chat")}>
+          <ChatBubbleBottomCenterTextIcon className="tutor-h-4 tutor-w-4 tutor-mr-2" />
+          Chat to know
+        </a>
       </div>
-      {isTabPending || isTabFetching ? (
-        <div className="tutor-skeleton tutor-w-full tutor-h-48" />
-      ) : isTabError ? (
-        <div>Error: {tabErr.message}</div>
+      {activeTab != "chat" ? (
+        // non chat tab ui
+        isTabPending || isTabFetching ? (
+          <div className="tutor-skeleton tutor-w-full tutor-h-48" />
+        ) : isTabError ? (
+          <div>Error: {tabErr.message}</div>
+        ) : (
+          docs.map((doc) => <DocBrief key={uniqid()} doc={doc} />)
+        )
       ) : (
-        docs.map((doc) => <DocBrief key={uniqid()} doc={doc} />)
+        // chat tab ui
+        // TODO
+        <h1>Coming soon</h1>
       )}
 
       {/* <h3>Target document link: </h3>
