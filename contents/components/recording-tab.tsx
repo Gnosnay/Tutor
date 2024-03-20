@@ -20,7 +20,7 @@ const ModalPlayer = ({
       tutor-justify-center tutor-items-center tutor-z-50">
       <div className="tutor-inline-flex tutor-flex-col tutor-items-end">
         <button
-          className="tutor-btn tutor-btn-circle tutor-btn-sm tutor-btn-primary"
+          className="tutor-btn tutor-btn-circle tutor-btn-sm tutor-btn-primary tutor-btn-outline"
           onClick={onClose}>
           <XMarkIcon className="tutor-h-4 tutor-w-4" />
         </button>
