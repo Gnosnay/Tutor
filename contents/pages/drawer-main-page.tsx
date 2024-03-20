@@ -226,7 +226,7 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         <a
           role="tab"
           className={`tutor-tab tutor-whitespace-nowrap ${
-            activeTab == "notices" ? "tutor-tab-active" : ""
+            activeTab == "notices" && "tutor-tab-active"
           }`}
           onClick={() => setActiveTab("notices")}>
           Notices
@@ -234,7 +234,7 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         <a
           role="tab"
           className={`tutor-tab tutor-whitespace-nowrap ${
-            activeTab == "usecases" ? "tutor-tab-active" : ""
+            activeTab == "usecases" && "tutor-tab-active"
           }`}
           onClick={() => setActiveTab("usecases")}>
           Use Cases
@@ -242,7 +242,7 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         <a
           role="tab"
           className={`tutor-tab tutor-whitespace-nowrap ${
-            activeTab == "historical notices" ? "tutor-tab-active" : ""
+            activeTab == "historical notices" && "tutor-tab-active"
           }`}
           onClick={() => setActiveTab("historical notices")}>
           Historical Notices
@@ -250,27 +250,25 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
         <a
           role="tab"
           className={`tutor-tab tutor-whitespace-nowrap tutor-w-36 ${
-            activeTab == "chat" ? "tutor-tab-active" : ""
+            activeTab == "chat" && "tutor-tab-active"
           }`}
           onClick={() => setActiveTab("chat")}>
           <ChatBubbleBottomCenterTextIcon className="tutor-h-4 tutor-w-4 tutor-mr-2" />
           Chat to know
         </a>
       </div>
-      {activeTab != "chat" ? (
+      {/* chat tab ui */}
+      {/* TODO */}
+      {activeTab == "chat" && <h1>Coming soon</h1>}
+      {activeTab != "chat" &&
         // non chat tab ui
-        isTabPending || isTabFetching ? (
+        (isTabPending || isTabFetching ? (
           <div className="tutor-skeleton tutor-w-full tutor-h-48" />
         ) : isTabError ? (
           <div>Error: {tabErr.message}</div>
         ) : (
           docs.map((doc) => <DocBrief key={uniqid()} doc={doc} />)
-        )
-      ) : (
-        // chat tab ui
-        // TODO
-        <h1>Coming soon</h1>
-      )}
+        ))}
 
       {/* <h3>Target document link: </h3>
       <p>The link to {currentUrl}</p>
