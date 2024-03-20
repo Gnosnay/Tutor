@@ -2,7 +2,15 @@ import type { eventWithTime } from "@rrweb/types"
 import { useEffect, useRef, useState } from "react"
 import Replayer from "rrweb-player"
 
-export default function Player({ events }: { events: eventWithTime[] }) {
+export default function Player({
+  events,
+  showController,
+  width
+}: {
+  events: eventWithTime[]
+  showController: boolean
+  width?: number
+}) {
   const playerElRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Replayer | null>(null)
 
@@ -17,7 +25,9 @@ export default function Player({ events }: { events: eventWithTime[] }) {
       props: {
         events,
         autoPlay: true,
-        width: 300
+        width: width,
+        height: width,
+        showController: showController
       }
     })
     return () => {

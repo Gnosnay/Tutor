@@ -4,7 +4,7 @@ import {
   PlayIcon,
   VideoCameraIcon
 } from "@heroicons/react/24/outline"
-import React, { useState, type ReactElement } from "react"
+import React, { useEffect, useRef, useState, type ReactElement } from "react"
 
 import DrawerMainPage from "~contents/pages/drawer-main-page"
 import { RawPage } from "~contents/pages/page-template"
@@ -12,6 +12,7 @@ import { useRecorder } from "~contents/utils/recorder"
 import { RouterContainer } from "~contents/utils/router"
 
 import Player from "./player"
+import { RecordingTab } from "./recording-tab"
 
 const BottonNavBar = ({
   items
@@ -60,45 +61,6 @@ const DocTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
     <RouterContainer>
       <DrawerMainPage onClose={onCloseClick} />
     </RouterContainer>
-  )
-}
-
-const RecordingTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
-  const recorderCtx = useRecorder()
-  const [showPlayer, setShowPlayer] = useState(false)
-  const prevEvents = recorderCtx.states.prevEvents
-
-  return (
-    <RawPage
-      title="Recording"
-      className="tutor-flex tutor-items-center tutor-justify-center tutor-flex-col tutor-space-y-4 tutor-h-screen">
-      {prevEvents && (
-        <button
-          className="tutor-btn"
-          onClick={() => {
-            setShowPlayer(true)
-          }}>
-          <PlayIcon className="tutor-w-6 tutor-h-5" />
-          Click to play last recording
-        </button>
-      )}
-      <button
-        className="tutor-btn"
-        onClick={() => {
-          recorderCtx.startRecording()
-          onCloseClick()
-        }}>
-        <VideoCameraIcon className="tutor-w-6 tutor-h-5" />
-        Click for recording
-      </button>
-      {/* {showPlayer && <div className="tutor-fixed tutor-inset-0 tutor-flex tutor-items-center tutor-justify-center tutor-z-50"> */}
-      {/* TODO https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect calculate the size and pass it. */}
-      {showPlayer && (
-        <div className="tutor-bg-white tutor-p-6 tutor-rounded tutor-shadow-lg">
-          <Player events={prevEvents} />
-        </div>
-      )}
-    </RawPage>
   )
 }
 
