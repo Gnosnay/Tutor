@@ -23,6 +23,7 @@ import {
 import { getProductInfo } from "~contents/utils/product-query"
 import { useRouter, useRouterDispatch } from "~contents/utils/router"
 
+import { ChatBox } from "../chatbox"
 import { DocumentPage } from "./document-detail-page"
 import { RawPage } from "./page-template"
 
@@ -259,7 +260,7 @@ export default function DrawerMainPage({ onClose }: { onClose: () => void }) {
       </div>
       {/* chat tab ui */}
       {/* TODO */}
-      {activeTab == "chat" && <h1>Coming soon</h1>}
+      {activeTab == "chat" && <ChatBox />}
       {activeTab != "chat" &&
         // non chat tab ui
         (isTabPending || isTabFetching ? (
