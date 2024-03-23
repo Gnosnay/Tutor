@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/24/outline"
 
-import { RawPage } from "~contents/pages/page-template"
+import { RawPage } from "~contents/components/pages/page-template"
 
 export const SettingsTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
   return (

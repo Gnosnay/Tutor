@@ -2,10 +2,10 @@ import { VideoCameraIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import type { eventWithTime } from "@rrweb/types"
 import React, { useEffect, useRef, useState } from "react"
 
-import { RawPage } from "~contents/pages/page-template"
+import { RawPage } from "~contents/components/pages/page-template"
 import { useRecorder } from "~contents/utils/recorder"
 
-import Player from "./player"
+import Player from "../player"
 
 const ModalPlayer = ({
   events,

@@ -6,14 +6,9 @@ import {
 } from "@heroicons/react/24/outline"
 import React, { useEffect, useRef, useState, type ReactElement } from "react"
 
-import DrawerMainPage from "~contents/pages/drawer-main-page"
-import { RawPage } from "~contents/pages/page-template"
-import { useRecorder } from "~contents/utils/recorder"
-import { RouterContainer } from "~contents/utils/router"
-
-import Player from "./player"
-import { RecordingTab } from "./recording-tab"
-import { SettingsTab } from "./setting-tab"
+import { DocTab } from "./tabs/docs-tab"
+import { RecordingTab } from "./tabs/recording-tab"
+import { SettingsTab } from "./tabs/setting-tab"
 
 const BottomNavBar = ({
   items
@@ -56,14 +51,6 @@ const BottomNavBar = ({
 }
 
 type tabType = "docs" | "recording" | "settings"
-
-const DocTab = ({ onCloseClick }: { onCloseClick: () => void }) => {
-  return (
-    <RouterContainer>
-      <DrawerMainPage onClose={onCloseClick} />
-    </RouterContainer>
-  )
-}
 
 export default function Drawer({ onCloseEvent }: { onCloseEvent: () => void }) {
   const [fadeInAnimation, setFadeInAnimation] = useState(true)
