@@ -17,3 +17,11 @@ When click the menu button, the drawer will be popped up, there will be followin
     - Doc version
 2. Active Notices. Active Notices is one [collapse](https://daisyui.com/components/collapse/).
     - Active Notices
+
+
+## Build and Install
+
+1. Run `Yarn run build`
+2. Install extension from local.
+    - `edge://extensions/` or `chrome://extensions/`
+    - `Load Unpacked` then choose the folder in `build/<the built package>`
